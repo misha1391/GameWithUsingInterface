@@ -1,14 +1,12 @@
-﻿using System.Net.Mail;
-
-namespace GameWithUsingInterface
+﻿namespace GameWithUsingInterface
 {
-    public interface ICombat
+    interface ICombat
     {
         int Attack();
     }
-    public interface ISupport
+    interface ISupport
     {
-        string Heal(int amount);
+        void Heal(List<GameCharapter> targets, int amount);
     }
     class Weapon: ICombat
     {
@@ -41,8 +39,13 @@ namespace GameWithUsingInterface
             this.Level = Level;
             this.EquippedWeapon = EquippedWeapon;
         }
+        public void Say(string value)
+        {
+            Console.WriteLine($"[{Name}] - {value}");
+        }
         //                                Вывести это,    если это null, то
         protected int GetWeaponBonus() => EquippedWeapon?.BonusDamage ?? 0;
+        public void TakeHeal(int amount) => HP += amount;
         public void TakeDamage(int damage) => HP = Math.Max(0, HP - damage);
         public abstract string GetRole();
     }
@@ -59,10 +62,16 @@ namespace GameWithUsingInterface
     {
         public Mage(string Name, int HP, int Level, Weapon? EquippedWeapon): base(Name, HP, Level, EquippedWeapon) {}
         public int Attack() => Level * 15 + GetWeaponBonus();
-        public string Heal(int amount)
+        public void Heal(List<GameCharapter> targets, int amount)
         {
-            
-            return $"{Name} лечит отряд на {amount}";
+            foreach(var i in targets)
+            {
+                if (i.IsAlive)
+                {
+                    i.TakeHeal(amount);
+                }
+            }
+            Console.WriteLine($"{Name} лечит отряд на {amount}");
         }
         public override string GetRole() => "Маг";
     }
@@ -74,20 +83,19 @@ namespace GameWithUsingInterface
             set => _members[index] = value;
         }
         public void Add(GameCharapter GC) => _members.Add(GC);
-        public void PrintAliveNames()
+        
+        public void HealAll(ISupport healer, int amount)
         {
-            foreach(var i in _members)
-            {
-                if (i.IsAlive) Console.WriteLine(i.Name);
-            }
+            healer.Heal(_members, amount);
         }
+
         public List<string> GetSupportNames()
         {
             List<string> result = new();
             
             foreach(var i in _members)
             {
-                if (i.GetType().IsAssignableFrom(typeof(ISupport)))
+                if (i is ISupport)
                 {
                     result.Add(i.Name);
                 }
@@ -111,6 +119,14 @@ namespace GameWithUsingInterface
                 if (i.EquippedWeapon?.BonusDamage >= minBonus) result.Add(i.Name);
             }
             return result;
+        }
+        
+        public void PrintAliveNames()
+        {
+            foreach(var i in _members)
+            {
+                if (i.IsAlive) Console.WriteLine(i.Name);
+            }
         }
         public void PrintSortedByLevelDesc()
         {
@@ -145,14 +161,19 @@ namespace GameWithUsingInterface
             
             Warrior war2 = (Warrior)party[2];
             Console.WriteLine($"{war2.Name} может нанести {war2.Attack()} урона");
+
+            Console.WriteLine($"{war2.Name} бьет {war1.Name} и наносит {war2.Attack()}");
             war1.TakeDamage(war2.Attack());
-            
             Console.WriteLine();
-            Console.WriteLine($"[{war1.Name}] - Ай, ты дурак что-ли, {war2.Name}?");
+
+            // Console.WriteLine($"[{war1.Name}] - Ай, ты дурак что-ли, {war2.Name}?");
+            war1.Say($"Ай, ты дурак что-ли, {war2.Name}?");
             Console.WriteLine($"{war1.Name}, HP: {war1.HP}");
+            Console.WriteLine();
 
             Mage mag1 = (Mage)party[1];
-            Console.WriteLine(mag1.Heal(10));
+            party.HealAll(mag1, 10);
+            Console.WriteLine($"{war1.Name}, HP: {war1.HP}");
         }
     }
 }
