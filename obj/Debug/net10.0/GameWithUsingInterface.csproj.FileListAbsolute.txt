@@ -1,0 +1,14 @@
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\GameWithUsingInterface.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\GameWithUsingInterface.AssemblyInfoInputs.cache
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\GameWithUsingInterface.AssemblyInfo.cs
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\GameWithUsingInterface.csproj.CoreCompileInputs.cache
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\bin\Debug\net10.0\GameWithUsingInterface.exe
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\bin\Debug\net10.0\GameWithUsingInterface.deps.json
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\bin\Debug\net10.0\GameWithUsingInterface.runtimeconfig.json
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\bin\Debug\net10.0\GameWithUsingInterface.dll
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\bin\Debug\net10.0\GameWithUsingInterface.pdb
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\GameWithUsingInterface.dll
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\refint\GameWithUsingInterface.dll
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\GameWithUsingInterface.pdb
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\GameWithUsingInterface.genruntimeconfig.cache
+C:\Users\misha\OneDrive\Рабочий стол\TOP\С#\GameWithUsingInterface\obj\Debug\net10.0\ref\GameWithUsingInterface.dll
