@@ -34,21 +34,22 @@ namespace GameWithUsingInterface
         public bool IsAlive { get => HP > 0; }
 
         public Weapon? EquippedWeapon { get; set; }
-        protected GameCharapter(string Name, int HP, int Level)
+        protected GameCharapter(string Name, int HP, int Level, Weapon? EquippedWeapon)
         {
             this.Name = Name;
             this.HP = HP;
             this.Level = Level;
+            this.EquippedWeapon = EquippedWeapon;
         }
         //                                Вывести это,    если это null, то
         protected int GetWeaponBonus() => EquippedWeapon?.BonusDamage ?? 0;
-        void TakeDamage(int damage) => HP = Math.Max(0, HP - damage);
+        public void TakeDamage(int damage) => HP = Math.Max(0, HP - damage);
         public abstract string GetRole();
     }
 
     class Warrior: GameCharapter, ICombat
     {
-        public Warrior(string Name, int HP, int Level) : base(Name, HP, Level) {}
+        public Warrior(string Name, int HP, int Level, Weapon? EquippedWeapon) : base(Name, HP, Level, EquippedWeapon) {}
         //                                Вывести это, если это null, то
         public string GetWeaponName() => EquippedWeapon?.Name ?? "без оружия";
         public int Attack() => Level * 10 + GetWeaponBonus();
@@ -56,7 +57,7 @@ namespace GameWithUsingInterface
     }
     class Mage: GameCharapter, ICombat, ISupport
     {
-        public Mage(string Name, int HP, int Level): base(Name, HP, Level) {}
+        public Mage(string Name, int HP, int Level, Weapon? EquippedWeapon): base(Name, HP, Level, EquippedWeapon) {}
         public int Attack() => Level * 15 + GetWeaponBonus();
         public string Heal(int amount)
         {
@@ -127,14 +128,31 @@ namespace GameWithUsingInterface
         static void Main(string[] args)
         {
             Party party = new();
-            party.Add(new Warrior("Вояка", 100, 5));
-            party.Add(new Mage("Фокус-Покус", 50, 10));
-            party.Add(new Warrior("Слабак", 25, 1));
-            party.Add(new Mage("Читер", 999, 99));
+            party.Add(new Warrior("Вояка", 100, 5, new Weapon("Кинжал", 10)));
+            party.Add(new Mage("Фокус-Покус", 50, 10, new Weapon("Посох", 5)));
+            party.Add(new Warrior("Слабак-полудурок", 25, 1, null));
+            party.Add(new Mage("Читер", 999, 99, null));
+            Console.WriteLine("Герои в группе:");
             party.PrintSortedByLevelDesc();
+            Console.WriteLine();
             // List<int> ints = new([0,1,2,3,4]);
             // Console.WriteLine(ints[0]);
-            Console.WriteLine(party[0].Name);
+
+            Warrior war1 = (Warrior)party[0];
+            Console.WriteLine($"{war1.Name} атакует на {war1.Attack()}");
+            Console.WriteLine($"{war1.Name} держит оружие {war1.GetWeaponName()}");
+            Console.WriteLine();
+            
+            Warrior war2 = (Warrior)party[2];
+            Console.WriteLine($"{war2.Name} может нанести {war2.Attack()} урона");
+            war1.TakeDamage(war2.Attack());
+            
+            Console.WriteLine();
+            Console.WriteLine($"[{war1.Name}] - Ай, ты дурак что-ли, {war2.Name}?");
+            Console.WriteLine($"{war1.Name}, HP: {war1.HP}");
+
+            Mage mag1 = (Mage)party[1];
+            Console.WriteLine(mag1.Heal(10));
         }
     }
 }
